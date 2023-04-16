@@ -1,0 +1,6 @@
+git clone <...>
+cd localdir (where you have put all files from remote rep)
+chmod +x install.sh
+chmod +x run.sh
+./install.sh
+./run.sh

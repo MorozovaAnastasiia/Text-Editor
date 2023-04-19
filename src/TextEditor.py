@@ -7,7 +7,6 @@ import time
 import json
 from googletrans import Translator, constants
 from pprint import pprint
-#from Globals import *
 from Globals import *
 
 class TextEditor:
@@ -79,13 +78,27 @@ class TextEditor:
         else:
             self.save_as_file()
 
-    def get_text(self):
-        """Translation of a word or a phrase."""
+    def get_text_eng(self):
+        """Translation of the input text into Russian."""
         try:
-            self.text_to_translate = self.my_text.selection_get()
+            self.text_to_translate = self.my_text.get("1.0",END)
             self.result = self.translator.translate(
                 self.text_to_translate, src=eng, dest=rus).text
-            self.translation_bar.config(text=self.result)
+            self.my_text.delete("1.0", END)
+            self.my_text.insert(END, self.result)
+            
+        except BaseException:
+            pass
+        
+    def get_text_rus(self):
+        """Translation of the input text into English."""
+        try:
+            self.text_to_translate = self.my_text.get("1.0",END)
+            self.result = self.translator.translate(
+                self.text_to_translate, src=rus, dest=eng).text
+            self.my_text.delete("1.0", END)
+            self.my_text.insert(END, self.result)
+            
         except BaseException:
             pass
 
@@ -120,11 +133,16 @@ class TextEditor:
         self.my_menu = Menu(self.root)
         self.root.config(menu=self.my_menu)
 
-    def init_translation_btn(self):
-        """Initialization of the translation button."""
-        self.button = ttk.Button(text=translate_label, command=self.get_text)
-        self.button.pack(side=BOTTOM)
+    def init_translation_btn_eng(self):
+        """Initialization of the translation button from eng to rus."""
+        self.buttone = ttk.Button(text=translate_eng_label, command=self.get_text_eng)
+        self.buttone.pack(side=BOTTOM)
 
+    def init_translation_btn_rus(self):
+        """Initialization of the translation button from rus to eng."""
+        self.buttonr = ttk.Button(text=translate_rus_label, command=self.get_text_rus)
+        self.buttonr.pack(side=BOTTOM)
+        
     def init_file_menu(self):
         """Initialization of all possible menu functions."""
         self.file_menu = Menu(self.my_menu, tearoff=False)
@@ -138,12 +156,8 @@ class TextEditor:
 
     def set_dependencies(self):
         """Setting up translation and status bars."""
-        self.translation_bar = Label(
-            self.root, text=translate_status, anchor=W)
         self.status_bar = Label(self.root, text=ready_label, anchor=E)
         self.status_bar.pack(fill=X, side=BOTTOM, ipady=padd)
-        self.translation_bar.pack(fill=X, side=BOTTOM, ipady=padd)
-        self.translation_bar.configure(anchor=an)
 
     def set_up(self):
         """Calling init functions in the right order."""
@@ -151,7 +165,8 @@ class TextEditor:
         self.init_scroll()
         self.init_text()
         self.init_menu()
-        self.init_translation_btn()
+        self.init_translation_btn_eng()
+        self.init_translation_btn_rus()
         self.init_file_menu()
         self.set_dependencies()
         self.root.mainloop()

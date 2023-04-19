@@ -1,5 +1,5 @@
-git clone <...>
-cd localdir (where you have put all files from remote rep)
+git clone https://github.com/MorozovaAnastasiia/Text-Editor
+cd Text-Editor
 chmod +x install.sh
 chmod +x run.sh
 ./install.sh

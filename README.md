@@ -2,9 +2,15 @@
 Более подробное описание работы текстового редактора можно прочитать в text_editor_description.pdf
 
 Чтобы установить и запустить программу можно ввести следующую последовательность команд:
+
 git clone https://github.com/MorozovaAnastasiia/Text-Editor
+
 cd Text-Editor
+
 chmod +x install.sh
+
 chmod +x run.sh
+
 ./install.sh
+
 ./run.sh

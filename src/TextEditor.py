@@ -153,7 +153,6 @@ class TextEditor:
             if startInd:
                 startInd = str(startInd)
                 lastInd = startInd+f'+{len(findString)}c'
-                print(startInd, lastInd)
                 self.my_text.tag_add(highlight, startInd, lastInd)
                 startInd = lastInd
                 
@@ -222,7 +221,6 @@ class TextEditor:
 
         def sub():
             findString = e1.get()
-            print(findString)
             self.set_mark(findString)
 
         def on_closing():
